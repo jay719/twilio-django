@@ -1,0 +1,26 @@
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+
+# Ignore environment-specific files
+*.env
+
+# Ignore virtual environment
+twilio_env/
+
+# Ignore database files
+*.sqlite3
+
+# Ignore log files
+*.log
+
+# Ignore IDE or editor specific files
+.vscode/
+.idea/
+
+# Ignore any compiled files or build directories
+/dist/
+/build/
+
+# Ignore any local development files or directories
+*.local
