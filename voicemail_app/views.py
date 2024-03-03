@@ -12,21 +12,15 @@ print(loader.get_template('voicemail_app/index.html'))
 def index(request):
     return render(request, 'voicemail_app/index.html')
 
+@require_POST
 @csrf_exempt  # Consider using CSRF token in AJAX request instead of exempting
 def ajax_send_voicemail(request):
-    # Simulate fake JSON data for testing
-    fake_data = {
-        "to_number": settings.EXAMPLE_NUMBER,
-        "from_number": settings.TWILIO_PHONE_NUMBER,
-        "voicemail": "This is a test voicemail message",
-        "is_text": True
-    }
-
-    # Use the fake data for testing
-    to_number = fake_data.get('to_number')
-    from_number = fake_data.get('from_number')
-    voicemail = fake_data.get('voicemail')
-    is_text = fake_data.get('is_text', True)
+    print(json.loads(request.body),"request")
+    data = json.loads(request.body)    # Use the fake data for testing
+    to_number = data.get('to_number')
+    from_number = settings.TWILIO_PHONE_NUMBER
+    voicemail = data.get('voicemail')
+    is_text = data.get('is_text')
 
     # Example validation (You should implement actual validation logic)
     if not to_number or not voicemail:

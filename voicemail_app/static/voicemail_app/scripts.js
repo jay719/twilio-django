@@ -20,17 +20,17 @@ document.addEventListener("DOMContentLoaded", function () {
   $("#confirmModal").on("show.bs.modal", function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var toNumber = $("#toNumber").val();
-    var messageText = $("#messageText").val();
+    var voicemail = $("#messageText").val();
     // Update modal content with the form data
     var modal = $(this);
     modal.find(".modal-body #modalToNumber").text(toNumber);
-    modal.find(".modal-body #modalMessageText").text(messageText);
+    modal.find(".modal-body #modalMessageText").text(voicemail);
   });
 
   // Event listener for the Confirm & Send button inside the modal
   $("#confirmSend").click(function () {
     var toNumber = $("#toNumber").val();
-    var messageText = $("#messageText").val();
+    var voicemail = $("#messageText").val();
     console.log("sending-call in scripts.js file");
     // AJAX call to send the voicemail
     $.ajax({
@@ -38,14 +38,14 @@ document.addEventListener("DOMContentLoaded", function () {
       type: "POST",
       headers: { "X-CSRFToken": getCSRFToken() },
       data: JSON.stringify({
-        to_number: toNumber,
-        content: messageText,
+        to_number: toNumber, // Pass fromNumber to match server-side
+        voicemail: voicemail, // Rename voicemail to match server-side
         is_text: true,
       }),
       contentType: "application/json",
       dataType: "json",
       success: function (response) {
-        alert("Voicemail sent successfully!");
+        console.log("Voicemail sent successfully!");
         $("#voicemailForm")[0].reset();
         $("#confirmModal").modal("hide");
       },
